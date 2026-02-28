@@ -101,7 +101,7 @@ const Home = () => {
 
                 <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6 flex items-center gap-3">
                     <BookOpen className="text-purple-400 w-6 h-6" />
-                    História & LPT: Links da Hora
+                    História: Links da Hora
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
