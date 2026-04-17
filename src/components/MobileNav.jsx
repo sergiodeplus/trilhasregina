@@ -19,6 +19,25 @@ const MobileNav = () => {
             <nav className="flex justify-between items-center">
                 {navLinks.map((link) => {
                     const isActive = location.pathname === link.path;
+                    if (link.path === '/admin') {
+                        return (
+                            <a
+                                key={link.path}
+                                href="http://localhost:3000/admin"
+                                className={clsx(
+                                    "flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-300",
+                                    isActive ? "text-primary -translate-y-2" : "text-secondary/60 hover:text-secondary"
+                                )}
+                            >
+                                <div className="p-2 rounded-full transition-all bg-transparent">
+                                    <link.icon className="w-5 h-5" />
+                                </div>
+                                <span className="text-[10px] font-medium transition-opacity opacity-0 h-0 w-0 overflow-hidden">
+                                    {link.name}
+                                </span>
+                            </a>
+                        );
+                    }
                     return (
                         <Link
                             key={link.path}

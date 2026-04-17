@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Star, ArrowRight, BookOpen, Crown, ChevronRight, Gamepad2, GraduationCap, Layout } from 'lucide-react';
-import { collection, getDocs } from 'firebase/firestore';
+import { Star, ArrowRight, BookOpen, Crown, ChevronRight, Gamepad2, GraduationCap, LayoutDashboard } from 'lucide-react';
 import { db } from '../lib/firebase';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 
 const Home = () => {
     const [activeTab, setActiveTab] = useState('home');
@@ -11,20 +11,21 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const actSnapshot = await getDocs(collection(db, 'activities'));
-                setActivities(actSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        // Real-time listener for activities
+        const unsubActivities = onSnapshot(query(collection(db, "activities")), (snapshot) => {
+            setActivities(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
 
-                const linkSnapshot = await getDocs(collection(db, 'links'));
-                setLinks(linkSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-            } catch (err) {
-                console.error("Erro ao carregar dados:", err);
-            } finally {
-                setLoading(false);
-            }
+        // Real-time listener for links
+        const unsubLinks = onSnapshot(query(collection(db, "links")), (snapshot) => {
+            setLinks(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+            setLoading(false);
+        });
+
+        return () => {
+            unsubActivities();
+            unsubLinks();
         };
-        fetchData();
     }, []);
 
     const containerVariants = {
@@ -41,10 +42,10 @@ const Home = () => {
     };
 
     const grades = [
-        { id: '6ano', title: '6º Ano', subtitle: 'Mundos Antigos', color: 'from-[#A1887F] to-[#A1887F]/80', icon: Star, count: 1 },
-        { id: '7ano', title: '7º Ano', subtitle: 'Mundos Medieval e Moderno', color: 'from-[#A8645E] to-[#A8645E]/80', icon: Crown, count: 2 },
-        { id: '8ano', title: '8º Ano', subtitle: 'Mundos Moderno e Contemporâneo', color: 'from-[#AF403D] to-[#AF403D]/80', icon: Crown, count: 3 },
-        { id: '9ano', title: '9º Ano', subtitle: 'Mundo Contemporâneo', color: 'from-[#B71C1C] to-[#B71C1C]/80', icon: Crown, count: 4 },
+        { id: '6ano', title: '6º Ano', subtitle: 'Mundos Antigos', color: 'from-[#3c8efc] to-[#5ba7fd]', icon: Star, count: 1 },
+        { id: '7ano', title: '7º Ano', subtitle: 'Mundos Medieval e Moderno', color: 'from-[#5ba7fd] to-[#7abffe]', icon: Crown, count: 2 },
+        { id: '8ano', title: '8º Ano', subtitle: 'Mundos Moderno e Contemporâneo', color: 'from-[#7abffe] to-[#98d8fe]', icon: Crown, count: 3 },
+        { id: '9ano', title: '9º Ano', subtitle: 'Mundo Contemporâneo', color: 'from-[#3c8efc] to-[#98d8fe]', icon: Crown, count: 4 },
     ];
 
     const renderHome = () => (
@@ -55,15 +56,22 @@ const Home = () => {
             className="space-y-12"
         >
             {/* Hero Section */}
-            <div className="text-center space-y-4 py-8">
+            <div className="text-center space-y-4 py-12 relative">
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4"
+                >
+                    Escola Modelo de Conceição
+                </motion.div>
                 <motion.h2
                     variants={itemVariants}
-                    className="text-4xl md:text-6xl font-bold text-gradient"
+                    className="text-5xl md:text-7xl font-black text-secondary uppercase tracking-tighter"
                 >
-                    Trilhas Digitais
+                    Trilhas <span className="text-primary">Digitais</span>
                 </motion.h2>
-                <motion.p variants={itemVariants} className="text-xl text-secondary/80 max-w-2xl mx-auto">
-                    Sua jornada pelo conhecimento histórico começa aqui. Selecione sua série para acessar as aventuras.
+                <motion.p variants={itemVariants} className="text-xl text-secondary/60 max-w-2xl mx-auto font-medium">
+                    Explorando os caminhos da <span className="text-secondary font-bold">História</span> e da <span className="text-secondary font-bold">Religiosidade</span> com a Profª Regina Almada.
                 </motion.p>
             </div>
 
@@ -76,7 +84,7 @@ const Home = () => {
                         whileHover={{ y: -10, scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setActiveTab(grade.id)}
-                        className={`relative p-1 rounded-2xl bg-gradient-to-br ${grade.color} shadow-lg shadow-${grade.color.split('-')[1]}/20 group overflow-hidden`}
+                        className={`relative p-1 rounded-2xl bg-gradient-to-br ${grade.color} shadow-lg shadow-primary/20 group overflow-hidden`}
                     >
                         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <div className="bg-surface/90/90 backdrop-blur-xl p-6 rounded-xl h-full flex flex-col items-center text-center border border-white/5 relative z-10 transition-colors group-hover:bg-surface/90/80">
@@ -87,7 +95,7 @@ const Home = () => {
                             <p className="text-sm text-secondary/80 group-hover:text-secondary transition-colors">{grade.subtitle}</p>
                             <div className="mt-4 flex gap-1">
                                 {[...Array(grade.count)].map((_, i) => (
-                                    <Star key={i} className={`w-4 h-4 text-${grade.color.split('-')[1]}-400 fill-current`} />
+                                    <Star key={i} className="w-4 h-4 text-primary fill-current" />
                                 ))}
                             </div>
                         </div>
@@ -101,7 +109,7 @@ const Home = () => {
 
                 <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500 mb-6 flex items-center gap-3">
                     <BookOpen className="text-purple-400 w-6 h-6" />
-                    História: Links da Hora
+                    Links da Hora
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -127,12 +135,10 @@ const Home = () => {
         </motion.div>
     );
 
-    // Placeholder content for grade sections - this will be dynamic with Firebase later
     const renderGrade = (gradeId) => {
         const gradeInfo = grades.find(g => g.id === gradeId);
         const gradeActivities = activities.filter(a => a.year === gradeId);
 
-        // Group by units
         const units = [1, 2, 3];
 
         return (
@@ -156,15 +162,14 @@ const Home = () => {
                     </button>
                 </div>
 
-                {/* Dynamic Units */}
                 {units.map((unit) => {
                     const unitActivities = gradeActivities.filter(a => String(a.unit) === String(unit));
-                    if (unitActivities.length === 0) return null; // Don't show empty units
+                    if (unitActivities.length === 0) return null;
 
                     return (
                         <div key={unit} className="space-y-4">
                             <h3 className="text-2xl font-bold text-secondary flex items-center gap-2 border-l-4 border-primary pl-4">
-                                <Layout className="w-6 h-6 text-primary" />
+                                <LayoutDashboard className="w-6 h-6 text-primary" />
                                 Unidade {unit}
                             </h3>
 
@@ -182,8 +187,8 @@ const Home = () => {
                                             {activity.imageUrl ? (
                                                 <img src={activity.imageUrl} alt={activity.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-                                                    <Gamepad2 className="w-12 h-12 text-gray-700" />
+                                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
+                                                    <Gamepad2 className="w-12 h-12 text-gray-400" />
                                                 </div>
                                             )}
                                             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -205,7 +210,7 @@ const Home = () => {
                     <div className="col-span-full py-12 text-center text-gray-500 bg-white/5 rounded-2xl border border-dashed border-white/10">
                         <Gamepad2 className="w-12 h-12 mx-auto mb-4 opacity-50" />
                         <p className="text-xl">Nenhuma atividade disponível no momento.</p>
-                        <p className="text-sm">Aguarde as novidades do professor!</p>
+                        <p className="text-sm">Aguarde as novidades da professora!</p>
                     </div>
                 )}
             </motion.div>

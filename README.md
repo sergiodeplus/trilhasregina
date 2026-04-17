@@ -1,16 +1,44 @@
-# React + Vite
+# Trilhas Digitais - Escola Modelo de Conceição 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma educacional moderna desenvolvida para a **Professora Regina Almada**, focada nas disciplinas de **História** e **Ensino religioso**.
 
-Currently, two official plugins are available:
+## 🎯 Objetivo
+Proporcionar uma experiência interativa e gamificada para os alunos do Ensino Fundamental II (6º ao 9º Ano), permitindo acesso fácil a atividades, links complementares e um mural de conquistas (badges).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **Frontend**: React 19 + Vite 7
+- **Estilização**: Tailwind CSS v4 (Design moderno, Glassmorphism, Paleta Azul Premium)
+- **Animações**: Framer Motion
+- **Ícones**: Lucide React
+- **Backend / DB**: Firebase Firestore (Real-time synchronization)
+- **Autenticação**: Firebase Authentication
 
-## React Compiler
+## 🎨 Paleta de Cores
+O projeto utiliza uma paleta azul profissional:
+- Color 1: `#3c8efc` (Primary)
+- Color 2: `#5ba7fd` (Secondary)
+- Color 3: `#7abffe` (Accent)
+- Color 4: `#98d8fe` (Highlight)
+- Color 5: `#b7f0ff` (Background)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📁 Estrutura de Rotas
+- `/` - Home (Seleção de Séries e Links da Hora)
+- `/badges` - Mural das Conquistas
+- `/objetivos` - Objetivos Pedagógicos
+- `/login` - Acesso Administrativo
+- `/admin` - Painel de Controle (Protegido por Firebase Auth)
 
-## Expanding the ESLint configuration
+## 🚀 Como Iniciar
+1. Instale as dependências: `npm install`
+2. Configure o arquivo `.env` com suas chaves do Firebase (veja o arquivo `.env` de exemplo).
+3. Inicie o servidor: `npm run dev`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🔐 Área Administrativa
+O Dashboard customizado permite:
+- Inserir/Remover atividades por série e unidade.
+- Gerenciar "Links da Hora".
+- Visualizar alunos e suas conquistas.
+
+---
+**Desenvolvido por Antigravity (Advanced Agentic Coding - Google DeepMind)**
+*Vibe Coding Edition*

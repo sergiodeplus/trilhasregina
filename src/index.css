@@ -1,25 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #B71C1C;
-  /* Red Pigment */
-  --color-primary-hover: #9A1818;
+  --color-primary: #3c8efc;
+  /* color1 */
+  --color-primary-hover: #5ba7fd;
+  /* color2 */
   --color-primary-foreground: #ffffff;
 
-  --color-secondary: #3E2723;
-  /* Deep Brown as secondary/text base */
+  --color-secondary: #003366;
+  /* Dark text base */
   --color-secondary-foreground: #ffffff;
 
-  --color-accent: #B71C1C;
-  /* Reusing red as accent */
+  --color-accent: #7abffe;
+  /* color3 */
   --color-accent-foreground: #ffffff;
 
-  --color-background: #E8DCCA;
-  /* Platinum/Beige */
-  --color-surface: #F5EFE6;
-  /* Lighter beige for cards */
-  --color-surface-highlight: #FFF8F0;
-  /* Even lighter */
+  --color-background: #b7f0ff;
+  /* color5 - background */
+  --color-surface: #ffffff;
+  /* White for cards */
+  --color-surface-highlight: #98d8fe;
+  /* color4 */
 
   --font-sans: 'Outfit', sans-serif;
 

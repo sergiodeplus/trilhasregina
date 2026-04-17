@@ -23,8 +23,10 @@ const Header = () => {
                         <Rocket className="text-primary w-6 h-6" />
                     </div>
                     <div>
-                        <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-secondary to-primary">Trilhas Digitais</h1>
-                        <p className="text-xs text-secondary/80 font-medium">Professora: Regina Almada</p>
+                        <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-secondary to-primary uppercase tracking-tight">Trilhas Digitais</h1>
+                        <p className="text-[10px] text-secondary/60 leading-none">Escola Modelo de Conceição</p>
+                        <p className="text-[11px] text-secondary font-bold mt-0.5">Profª: Regina Almada</p>
+                        <p className="text-[10px] text-secondary/70 italic leading-none">História & Ensino Religioso</p>
                     </div>
                 </Link>
 
@@ -46,8 +48,9 @@ const Header = () => {
                             )}
                         </Link>
                     ))}
-                    <Link to="/admin" className="px-5 py-2.5 rounded-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25 text-sm font-medium transition-all hover:scale-105 active:scale-95">
-                        Área do Professor
+                    <Link to="/login" className="px-5 py-2.5 rounded-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25 text-sm font-medium transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                        <LogIn className="w-4 h-4" />
+                        Acesso Restrito
                     </Link>
                 </nav>
             </div>
