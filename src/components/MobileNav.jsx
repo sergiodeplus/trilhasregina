@@ -21,9 +21,9 @@ const MobileNav = () => {
                     const isActive = location.pathname === link.path;
                     if (link.path === '/admin') {
                         return (
-                            <a
+                            <Link
                                 key={link.path}
-                                href="http://localhost:3000/admin"
+                                to="/login"
                                 className={clsx(
                                     "flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-300",
                                     isActive ? "text-primary -translate-y-2" : "text-secondary/60 hover:text-secondary"
@@ -32,10 +32,10 @@ const MobileNav = () => {
                                 <div className="p-2 rounded-full transition-all bg-transparent">
                                     <link.icon className="w-5 h-5" />
                                 </div>
-                                <span className="text-[10px] font-medium transition-opacity opacity-0 h-0 w-0 overflow-hidden">
+                                <span className={clsx("text-[10px] font-medium transition-opacity", isActive ? "opacity-100 font-bold" : "opacity-0 h-0 w-0 overflow-hidden")}>
                                     {link.name}
                                 </span>
-                            </a>
+                            </Link>
                         );
                     }
                     return (
